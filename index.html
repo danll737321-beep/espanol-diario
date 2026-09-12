@@ -59,8 +59,8 @@
     border:none;
     font-family:'Inter',sans-serif;
     font-weight:600;
-    font-size:15px;
-    padding:10px 6px 12px;
+    font-size:13.5px;
+    padding:10px 2px 12px;
     cursor:pointer;
     color:#8a8071;
     border-bottom:3px solid transparent;
@@ -126,7 +126,6 @@
     border-radius:var(--radius);
     position:relative;
     padding:30px 26px 24px;
-    cursor:pointer;
     display:flex;
     flex-direction:column;
     justify-content:center;
@@ -177,9 +176,7 @@
     cursor:pointer;
   }
   .speak-btn svg{width:14px;height:14px;fill:var(--cream);}
-  .card .back{display:none;width:100%;}
-  .card.flipped .front{display:none;}
-  .card.flipped .back{display:block;}
+  .card .back{width:100%;margin-top:16px;}
   .card .zh{font-size:20px;font-weight:700;margin-bottom:4px;}
   .card .en{font-size:14px;color:#5c5344;margin-bottom:16px;font-style:italic;}
   .card .example{
@@ -250,6 +247,7 @@
   table.conj td{padding:10px 4px;font-size:15px;}
   table.conj td.pron{color:#5c5344;font-size:13px;width:34%;}
   table.conj td.form{font-weight:600;}
+  table.conj td.form .trans{font-weight:400;font-size:12px;color:#5c5344;margin-top:2px;}
   table.conj td.play{width:36px;text-align:right;}
   table.conj button.mini-speak{
     background:none;border:none;cursor:pointer;color:var(--teal-dark);
@@ -257,6 +255,69 @@
   }
   table.conj button.mini-speak svg{width:17px;height:17px;}
   .nota{font-size:12px;color:#a89a7d;margin-top:8px;font-style:italic;}
+
+  /* ---- grammar & patterns ---- */
+  .g-card, .p-card{
+    background:var(--sand);
+    border:2px solid var(--ink);
+    border-radius:var(--radius);
+    padding:18px 20px;
+    margin-bottom:16px;
+  }
+  .g-card .g-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    gap:10px;
+    margin-bottom:8px;
+  }
+  .g-card .g-es{
+    font-family:'Fraunces',serif;
+    font-style:italic;
+    font-weight:600;
+    font-size:19px;
+    color:var(--teal-dark);
+  }
+  .g-card .g-zh-title{
+    font-size:12.5px;
+    font-weight:700;
+    color:var(--papaya);
+    white-space:nowrap;
+  }
+  .g-card .g-explain{font-size:14px;line-height:1.6;margin-bottom:4px;}
+  .g-card .g-explain.en{color:#5c5344;font-style:italic;font-size:13px;}
+  .g-card .g-ex{
+    border-top:1px dashed var(--line);
+    margin-top:10px;
+    padding-top:10px;
+  }
+  .g-card .g-ex .es{font-weight:600;font-size:14px;}
+  .g-card .g-ex .zh-en{font-size:12.5px;color:#5c5344;}
+
+  .p-card .p-es{
+    font-family:'Fraunces',serif;
+    font-weight:600;
+    font-size:18px;
+    color:var(--ink);
+    margin-bottom:2px;
+  }
+  .p-card .p-zh{font-size:14px;color:var(--teal);font-weight:600;margin-bottom:8px;}
+  .p-card .p-note{font-size:12.5px;color:#a89a7d;font-style:italic;margin-bottom:12px;}
+  .p-card .p-ex{
+    background:var(--cream);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:10px 12px;
+    margin-bottom:8px;
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:10px;
+  }
+  .p-card .p-ex:last-child{margin-bottom:0;}
+  .p-card .p-ex .txt .es{font-weight:600;font-size:14px;}
+  .p-card .p-ex .txt .zh-en{font-size:12.5px;color:#5c5344;}
+  .p-card button.mini-speak{flex:0 0 auto;}
 
   footer{
     text-align:center;
@@ -282,8 +343,10 @@
   </header>
 
   <nav class="modes">
-    <button data-mode="vocab" class="active">詞彙 Vocabulario</button>
-    <button data-mode="verbs">動詞變位 Verbos</button>
+    <button data-mode="vocab" class="active">詞彙</button>
+    <button data-mode="verbs">動詞變位</button>
+    <button data-mode="grammar">文法</button>
+    <button data-mode="patterns">句型</button>
   </nav>
 
   <!-- VOCAB PANEL -->
@@ -321,7 +384,6 @@
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
       </button>
     </div>
-    <div class="hint">點卡片翻面看中英解釋</div>
     <div class="toolbar">
       <button id="shuffleBtn">🔀 隨機排序</button>
       <button id="resetBtn">↺ 重新排序</button>
@@ -346,14 +408,37 @@
     <div class="nota" id="verbNota"></div>
   </section>
 
+  <!-- GRAMMAR PANEL -->
+  <section class="panel" id="panel-grammar">
+    <div id="grammarList"></div>
+  </section>
+
+  <!-- PATTERNS PANEL -->
+  <section class="panel" id="panel-patterns">
+    <div id="patternsList"></div>
+  </section>
+
   <footer>拉美西語發音（es-MX）· 使用瀏覽器內建語音合成</footer>
 </div>
 
 <script>
 const PERSONS = ["yo","tú","él/ella/usted","nosotros","ustedes","ellos/ellas"];
+const SUBJ_ZH = ["我","你","他/她/您","我們","你們","他們/她們"];
+const SUBJ_EN = ["I","you","he/she/you","we","you (all)","they"];
+
+function thirdPersonS(verb){
+  if (/[sxz]$|ch$|sh$/.test(verb)) return verb + 'es';
+  if (/[^aeiou]y$/.test(verb)) return verb.slice(0,-1) + 'ies';
+  return verb + 's';
+}
+function baseEn(ingles){
+  return ingles.replace(/^to\s+/, '').split('/')[0].trim();
+}
 
 let vocab = [];
 let verbs = [];
+let grammar = [];
+let patterns = [];
 let filtered = [];
 let currentIndex = 0;
 let currentCategory = "全部";
@@ -384,13 +469,19 @@ function speak(text){
 // ---------- load data ----------
 Promise.all([
   fetch('vocab.json').then(r=>r.json()),
-  fetch('verbs.json').then(r=>r.json())
-]).then(([v, vb])=>{
+  fetch('verbs.json').then(r=>r.json()),
+  fetch('grammar.json').then(r=>r.json()),
+  fetch('patterns.json').then(r=>r.json())
+]).then(([v, vb, gr, pt])=>{
   vocab = v;
   verbs = vb;
+  grammar = gr;
+  patterns = pt;
   initCategories();
   applyFilter("全部");
   initVerbs();
+  renderGrammar();
+  renderPatterns();
 }).catch(err=>{
   document.getElementById('card').innerHTML = '<p style="color:#a33">資料載入失敗，請確認 vocab.json / verbs.json 與 index.html 在同一層。</p>';
   console.error(err);
@@ -429,8 +520,6 @@ function shuffleFiltered(){
 }
 
 function renderCard(){
-  const card = document.getElementById('card');
-  card.classList.remove('flipped');
   if (!filtered.length){
     document.getElementById('progress').textContent = '此分類暫無詞彙';
     return;
@@ -449,9 +538,6 @@ function renderCard(){
   document.getElementById('nextBtn').disabled = currentIndex === filtered.length-1;
 }
 
-document.getElementById('card').addEventListener('click', ()=>{
-  document.getElementById('card').classList.toggle('flipped');
-});
 document.getElementById('speakFront').addEventListener('click', (e)=>{
   e.stopPropagation();
   if (filtered[currentIndex]) speak(filtered[currentIndex].spanish);
@@ -491,24 +577,70 @@ function renderVerb(infinitivo){
   document.getElementById('verbMeaning').textContent = `${v.chino} · ${v.ingles}`;
   const presForms = [v.pres_yo, v.pres_tu, v.pres_el_ella_usted, v.pres_nosotros, v.pres_ustedes, v.pres_ellos];
   const pretForms = [v.pret_yo, v.pret_tu, v.pret_el_ella_usted, v.pret_nosotros, v.pret_ustedes, v.pret_ellos];
-  document.getElementById('presTable').innerHTML = buildRows(presForms);
-  document.getElementById('pretTable').innerHTML = buildRows(pretForms);
+  document.getElementById('presTable').innerHTML = buildRows(presForms, v, 'present');
+  document.getElementById('pretTable').innerHTML = buildRows(pretForms, v, 'past');
   document.getElementById('verbNota').textContent = v.nota ? '＊ ' + v.nota : '';
 
-  document.querySelectorAll('button.mini-speak').forEach(btn=>{
+  document.querySelectorAll('#presTable button.mini-speak, #pretTable button.mini-speak').forEach(btn=>{
     btn.addEventListener('click', ()=> speak(btn.dataset.word));
   });
 }
 
-function buildRows(forms){
-  return PERSONS.map((p,i)=>`
+function buildRows(forms, v, tense){
+  const base = baseEn(v.ingles);
+  return PERSONS.map((p,i)=>{
+    const zh = SUBJ_ZH[i] + v.chino + (tense === 'past' ? '了' : '');
+    const enVerb = (tense === 'present' && i === 2) ? thirdPersonS(base) : base;
+    const en = SUBJ_EN[i] + ' ' + enVerb + (tense === 'past' ? ' (past)' : '');
+    return `
     <tr>
       <td class="pron">${p}</td>
-      <td class="form">${forms[i]}</td>
+      <td class="form">${forms[i]}<div class="trans">${zh} · ${en}</div></td>
       <td class="play"><button class="mini-speak" data-word="${forms[i]}">
         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3a4.5 4.5 0 0 0-2.5-4.03v8.06A4.5 4.5 0 0 0 16.5 12z"/></svg>
       </button></td>
-    </tr>`).join('');
+    </tr>`;
+  }).join('');
+}
+
+function renderGrammar(){
+  document.getElementById('grammarList').innerHTML = grammar.map(g => `
+    <div class="g-card">
+      <div class="g-head">
+        <div class="g-es">${g.title_es}</div>
+        <div class="g-zh-title">${g.title_zh}</div>
+      </div>
+      <div class="g-explain">${g.zh}</div>
+      <div class="g-explain en">${g.en}</div>
+      <div class="g-ex">
+        <div class="es">${g.ex_es}</div>
+        <div class="zh-en">${g.ex_zh}</div>
+        <div class="zh-en">${g.ex_en}</div>
+      </div>
+    </div>`).join('');
+}
+
+function renderPatterns(){
+  document.getElementById('patternsList').innerHTML = patterns.map(p => `
+    <div class="p-card">
+      <div class="p-es">${p.pattern_es}</div>
+      <div class="p-zh">${p.pattern_zh}</div>
+      <div class="p-note">${p.note}</div>
+      ${p.examples.map(ex => `
+        <div class="p-ex">
+          <div class="txt">
+            <div class="es">${ex.es}</div>
+            <div class="zh-en">${ex.zh}</div>
+            <div class="zh-en">${ex.en}</div>
+          </div>
+          <button class="mini-speak" data-word="${ex.es}">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3a4.5 4.5 0 0 0-2.5-4.03v8.06A4.5 4.5 0 0 0 16.5 12z"/></svg>
+          </button>
+        </div>`).join('')}
+    </div>`).join('');
+  document.querySelectorAll('#patternsList button.mini-speak').forEach(btn=>{
+    btn.addEventListener('click', ()=> speak(btn.dataset.word));
+  });
 }
 </script>
 </body>
