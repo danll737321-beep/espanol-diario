@@ -139,6 +139,24 @@
   .pattern-examples li:first-child{border-top:none;}
   .pattern-examples .ex-es{color:var(--tinta);font-weight:600;font-size:14.5px;}
 
+  /* ---- substitution chips (單詞代換) ---- */
+  .subs-row{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:10px 0 4px;}
+  .subs-label{font-size:12.5px;color:var(--tinta-suave);margin-right:2px;}
+  .sub-chip{
+    font-family:'Inter',sans-serif;font-size:13.5px;
+    padding:7px 13px;border-radius:16px;min-height:34px;
+    border:1px solid var(--terracota-suave);background:var(--papel);
+    color:var(--terracota);cursor:pointer;
+  }
+  .sub-chip:hover,.sub-chip.active{background:var(--terracota);color:var(--papel);border-color:var(--terracota);}
+  .sub-preview{
+    display:none;align-items:center;gap:6px;flex-wrap:wrap;
+    margin:6px 0 2px;padding:10px 12px;border-radius:8px;
+    background:var(--crema);border:1px dashed var(--linea-forte);
+    font-size:15px;color:var(--tinta);
+  }
+  .sub-preview.show{display:flex;}
+
   /* ---- verb conjugation ---- */
   .conj-block{margin-top:14px;}
   .conj-block h4{
@@ -569,6 +587,7 @@ function renderPatterns(){
           <input type="checkbox" data-id="${p.id}" ${isKnown(p.id)?'checked':''}>已學
         </div>
       </div>
+      ${subsBlock(p.template, p.subs)}
       <ul class="pattern-examples">
         ${p.examples.map(e=>`<li><span class="ex-es">${e.es}</span>${sndBtn(e.es)}<br>${e.zh} ／ ${e.en}</li>`).join('')}
       </ul>
@@ -579,6 +598,32 @@ function renderPatterns(){
 }
 document.getElementById('pattern-search').addEventListener('input', renderPatterns);
 document.getElementById('pattern-hide-known').addEventListener('change', renderPatterns);
+
+/* ---- 單詞代換 (subsBlock) ---- */
+function subsBlock(template, subs){
+  if(!subs || !subs.length) return '';
+  return `
+    <div class="subs-row" data-template="${encodeURIComponent(template)}">
+      <span class="subs-label">套用看看：</span>
+      ${subs.map(w=>`<button class="sub-chip" type="button" data-word="${encodeURIComponent(w)}">${w}</button>`).join('')}
+    </div>
+    <div class="sub-preview"></div>`;
+}
+document.addEventListener('click', e=>{
+  const chip = e.target.closest('.sub-chip');
+  if(!chip) return;
+  e.stopPropagation();
+  const row = chip.closest('.subs-row');
+  const preview = row.nextElementSibling;
+  if(!preview || !preview.classList.contains('sub-preview')) return;
+  const template = decodeURIComponent(row.dataset.template);
+  const word = decodeURIComponent(chip.dataset.word);
+  const sentence = template.replace('〜', word);
+  row.querySelectorAll('.sub-chip').forEach(c=>c.classList.remove('active'));
+  chip.classList.add('active');
+  preview.classList.add('show');
+  preview.innerHTML = `<span>${sentence}</span>${sndBtn(sentence)}`;
+});
 </script>
 </body>
 </html>
