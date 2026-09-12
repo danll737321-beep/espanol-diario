@@ -3,661 +3,530 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Español Diario · 西語日常溝通</title>
+<title>Español Diario | 西語日常溝通</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,700;1,9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --cream:#FBF6EC;
-    --sand:#EFE4CE;
-    --ink:#241F18;
-    --teal:#1C4A46;
-    --teal-dark:#123331;
-    --papaya:#E2662B;
-    --papaya-dark:#B84E1C;
-    --marigold:#EFAE34;
-    --line:#D9CBA8;
-    --radius:2px;
+    --crema:#FBF6EC;
+    --papel:#FFFDF8;
+    --tinta:#241F18;
+    --tinta-suave:#5C5344;
+    --terracota:#C1501E;
+    --terracota-suave:#EFD9C4;
+    --verde:#3F6B52;
+    --verde-suave:#DCE8DC;
+    --linea:#DED0AA;
+    --linea-forte:#C9BE9F;
   }
   *{box-sizing:border-box;}
-  html,body{margin:0;padding:0;}
   body{
-    background:var(--cream);
-    color:var(--ink);
-    font-family:'Inter',sans-serif;
-    min-height:100vh;
-    font-size:16px;
-    line-height:1.5;
-    -webkit-font-smoothing:antialiased;
-    -webkit-text-size-adjust:100%;
-  }
-  .wrap{
-    max-width:640px;
-    margin:0 auto;
-    padding:calc(env(safe-area-inset-top) + 20px) 18px calc(env(safe-area-inset-bottom) + 60px);
-  }
-
-  header.top{margin-bottom:22px;}
-  .eyebrow-row{display:flex;align-items:baseline;justify-content:space-between;}
-  h1{
-    font-family:'Fraunces',serif;
-    font-weight:700;
-    font-style:italic;
-    font-size:clamp(30px,7vw,42px);
-    margin:0 0 4px;
-    color:var(--teal-dark);
-    letter-spacing:-0.01em;
-  }
-  .tagline{
-    font-size:15px;
-    color:#5c5344;
     margin:0;
-    max-width:46ch;
-  }
-
-  nav.modes{
-    display:flex;
-    gap:0;
-    margin:24px 0 20px;
-    border-bottom:2px solid var(--ink);
-  }
-  nav.modes button{
-    flex:1;
-    background:none;
-    border:none;
+    background:var(--crema);
+    background-image:radial-gradient(circle at 1px 1px, rgba(36,31,24,0.05) 1px, transparent 0);
+    background-size:22px 22px;
+    color:var(--tinta);
     font-family:'Inter',sans-serif;
-    font-weight:600;
-    font-size:14px;
-    padding:13px 2px;
-    min-height:44px;
-    cursor:pointer;
-    color:#8a8071;
-    border-bottom:3px solid transparent;
-    margin-bottom:-2px;
-    transition:color .15s ease;
+    font-size:16px;
+    line-height:1.65;
+    -webkit-text-size-adjust:100%;
+    padding-left:env(safe-area-inset-left);
+    padding-right:env(safe-area-inset-right);
   }
-  nav.modes button.active{
-    color:var(--ink);
-    border-bottom-color:var(--papaya);
-  }
+  .wrap{max-width:760px;margin:0 auto;padding:32px 20px calc(60px + env(safe-area-inset-bottom));}
+  .es-main, .ex-es, .pattern-template, .conj-main{font-family:'Inter',sans-serif;}
 
-  section.panel{display:none;}
-  section.panel.active{display:block;}
-
-  /* ---- category chips ---- */
-  .chips{
-    display:flex;
-    gap:8px;
-    overflow-x:auto;
-    padding-bottom:10px;
-    margin-bottom:18px;
-    scrollbar-width:thin;
-  }
-  .chips::-webkit-scrollbar{height:5px;}
-  .chips::-webkit-scrollbar-thumb{background:var(--line);}
-  .chip{
-    flex:0 0 auto;
-    padding:9px 16px;
-    min-height:38px;
-    display:flex;
-    align-items:center;
-    border:1.5px solid var(--ink);
-    border-radius:20px;
-    font-size:14px;
-    font-weight:600;
-    background:var(--cream);
-    color:var(--ink);
-    cursor:pointer;
-    white-space:nowrap;
-  }
-  .chip.active{background:var(--ink);color:var(--cream);}
-
-  /* ---- flashcard ---- */
-  .stage{
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    gap:10px;
-    margin-bottom:14px;
-  }
-  .arrow-btn{
-    background:none;border:none;cursor:pointer;
-    width:44px;height:44px;
+  /* ---- Header ---- */
+  header{display:flex;align-items:center;gap:18px;margin-bottom:24px;}
+  .sello{
+    flex:none;width:56px;height:56px;
+    background:var(--terracota);color:var(--papel);
+    border-radius:8px;
     display:flex;align-items:center;justify-content:center;
-    color:var(--teal-dark);
-    flex:0 0 44px;
+    font-family:'Fraunces',serif;font-style:italic;font-weight:700;font-size:28px;
+    transform:rotate(-3deg);
+    box-shadow:0 3px 0 rgba(36,31,24,.15);
   }
-  .arrow-btn svg{width:24px;height:24px;}
-  .arrow-btn:disabled{opacity:.25;cursor:default;}
+  h1{
+    font-family:'Fraunces',serif;font-style:italic;font-weight:700;
+    font-size:28px;margin:0;letter-spacing:.01em;color:var(--tinta);
+  }
+  header p{margin:3px 0 0;color:var(--tinta-suave);font-size:14.5px;}
 
-  .card{
-    flex:1;
-    max-width:440px;
-    min-height:260px;
-    background:var(--sand);
-    border:2px solid var(--ink);
-    border-radius:var(--radius);
-    position:relative;
-    padding:30px 26px 24px;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-    text-align:center;
+  .beginner-banner{
+    background:var(--verde-suave);color:var(--verde);border-radius:10px;
+    padding:14px 16px;margin-bottom:22px;font-size:14px;line-height:1.6;
   }
-  .card::before{
-    content:"";
-    position:absolute;
-    top:-1px;left:16px;right:16px;
-    height:10px;
-    background-image:radial-gradient(circle at 8px 0px, transparent 6px, var(--sand) 6.5px);
-    background-size:16px 10px;
-    background-repeat:repeat-x;
+  .beginner-banner b{color:var(--verde);}
+
+  /* ---- Tabs ---- */
+  nav.tabs{display:flex;border-bottom:1px solid var(--linea-forte);margin-bottom:20px;overflow-x:auto;}
+  nav.tabs button{
+    font-family:'Inter',sans-serif;background:none;border:none;
+    padding:14px 18px;min-height:44px;
+    font-size:15.5px;font-weight:600;color:var(--tinta-suave);
+    cursor:pointer;position:relative;white-space:nowrap;
   }
-  .card .tag{
-    position:absolute;
-    top:12px;left:14px;
-    font-size:12px;
-    font-weight:600;
-    color:var(--teal);
-    letter-spacing:.02em;
-  }
-  .card .spanish{
-    font-family:'Fraunces',serif;
-    font-weight:600;
-    font-size:clamp(26px,6vw,34px);
-    color:var(--ink);
-    margin:6px 0 6px;
-    line-height:1.15;
-  }
-  .card .ipa{
-    font-size:16px;
-    color:var(--teal);
-    margin-bottom:14px;
-  }
-  .speak-btn{
-    display:inline-flex;
-    align-items:center;
-    gap:8px;
-    background:var(--teal-dark);
-    color:var(--cream);
-    border:none;
-    padding:11px 20px;
-    min-height:44px;
-    border-radius:24px;
-    font-size:15px;
-    font-weight:600;
-    cursor:pointer;
-  }
-  .speak-btn svg{width:18px;height:18px;fill:none;stroke:var(--cream);stroke-width:1.8;}
-  .card .back{width:100%;margin-top:16px;}
-  .card .zh{font-size:22px;font-weight:700;margin-bottom:4px;}
-  .card .en{font-size:15px;color:#5c5344;margin-bottom:16px;font-style:italic;}
-  .card .example{
-    border-top:1px dashed var(--line);
-    padding-top:14px;
-    text-align:left;
-  }
-  .card .example .es{font-weight:600;font-size:16px;margin-bottom:4px;}
-  .card .example .zh-en{font-size:14px;color:#5c5344;line-height:1.5;}
-  
-  .progress{
-    text-align:center;
-    font-size:14px;
-    font-weight:600;
-    color:var(--teal-dark);
-    margin-bottom:6px;
-  }
-  .toolbar{display:flex;justify-content:center;gap:10px;margin-bottom:6px;}
-  .toolbar button{
-    background:none;
-    border:1.5px solid var(--ink);
-    border-radius:20px;
-    padding:6px 14px;
-    font-size:12px;
-    font-weight:600;
-    cursor:pointer;
-    color:var(--ink);
+  nav.tabs button.active{color:var(--tinta);}
+  nav.tabs button.active::after{
+    content:"";position:absolute;left:14px;right:14px;bottom:-1px;height:3px;
+    background:var(--terracota);border-radius:2px 2px 0 0;
   }
 
-  /* ---- verb mode ---- */
-  .verb-select-row{margin-bottom:18px;}
-  select{
-    width:100%;
-    font-family:'Inter',sans-serif;
-    font-size:16px;
-    font-weight:600;
-    padding:12px 14px;
-    border:2px solid var(--ink);
-    border-radius:var(--radius);
-    background:var(--cream);
-    color:var(--ink);
+  /* ---- Toolbar ---- */
+  .toolbar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:18px;}
+  .toolbar input[type=text]{
+    flex:1 1 200px;padding:12px 14px;border:1px solid var(--linea-forte);border-radius:8px;
+    background:var(--papel);font-family:inherit;font-size:16px;color:var(--tinta);min-height:44px;
   }
-  .verb-meaning{
-    font-family:'Fraunces',serif;
-    font-style:italic;
-    font-size:18px;
-    color:var(--teal-dark);
-    margin:14px 0 20px;
+  .toolbar select{
+    padding:12px 12px;border:1px solid var(--linea-forte);border-radius:8px;
+    background:var(--papel);font-family:inherit;font-size:16px;color:var(--tinta);min-height:44px;
   }
-  .conj-block{margin-bottom:22px;}
-  .conj-block h3{
-    font-size:14px;
-    text-transform:none;
-    letter-spacing:.02em;
-    color:var(--papaya-dark);
-    border-bottom:2px solid var(--ink);
-    padding-bottom:6px;
-    margin-bottom:0;
+  .toolbar label.chk{
+    display:flex;align-items:center;gap:8px;font-size:14px;color:var(--tinta-suave);
+    padding:10px;min-height:44px;
+  }
+  .toolbar input[type=checkbox]{accent-color:var(--terracota);width:20px;height:20px;}
+  .count-badge{font-size:13px;color:var(--tinta-suave);margin-left:auto;padding:9px 2px;}
+
+  section{display:none;}
+  section.active{display:block;}
+
+  /* ---- item cards ---- */
+  .item-card{
+    background:var(--papel);border:1px solid var(--linea);border-radius:10px;
+    padding:16px 18px;margin-bottom:12px;
+  }
+  .item-top{display:flex;align-items:flex-start;gap:12px;}
+  .item-main{flex:1;min-width:0;}
+  .es-main{font-family:'Fraunces',serif;font-weight:600;font-size:21px;color:var(--tinta);}
+  .ipa{font-size:13.5px;color:var(--terracota);margin-left:6px;font-family:'Inter',sans-serif;}
+  .meaning{font-size:15px;margin-top:4px;color:var(--tinta);}
+  .level-tag{
+    font-size:12px;padding:3px 10px;border-radius:12px;background:var(--verde-suave);color:var(--verde);
+    flex:none;align-self:flex-start;white-space:nowrap;
+  }
+  .known-check{
+    flex:none;display:flex;flex-direction:column;align-items:center;gap:4px;
+    font-size:11.5px;color:var(--tinta-suave);min-height:44px;justify-content:center;
+  }
+  .known-check input{width:22px;height:22px;accent-color:var(--verde);}
+  .example{
+    margin-top:10px;padding-top:10px;border-top:1px dashed var(--linea-forte);
+    font-size:13.5px;color:var(--tinta-suave);line-height:1.6;
+  }
+  .example .ex-es{color:var(--tinta);font-weight:600;font-size:14.5px;}
+
+  .item-card.expandable{cursor:pointer;}
+  .expand-body{margin-top:8px;font-size:15px;color:var(--tinta-suave);display:none;}
+  .item-card.open .expand-body{display:block;}
+
+  .empty-note{color:var(--tinta-suave);font-size:14px;padding:30px 0;text-align:center;}
+
+  /* ---- grammar ---- */
+  .g-title{font-size:19px;font-family:'Fraunces',serif;font-weight:600;color:var(--tinta);}
+  .g-title .g-zh{font-size:13px;font-weight:700;color:var(--terracota);margin-left:8px;font-family:'Inter',sans-serif;}
+
+  /* ---- pattern group ---- */
+  .pattern-template{font-size:19px;font-family:'Fraunces',serif;font-weight:600;color:var(--tinta);}
+  .pattern-meaning{font-size:14.5px;color:var(--terracota);font-weight:600;margin:3px 0 2px;}
+  .pattern-note{font-size:13px;color:var(--tinta-suave);font-style:italic;margin-bottom:8px;}
+  .pattern-examples{list-style:none;margin:8px 0 0;padding:0;}
+  .pattern-examples li{
+    font-size:14px;padding:8px 0;color:var(--tinta-suave);border-top:1px dashed var(--linea-forte);
+  }
+  .pattern-examples li:first-child{border-top:none;}
+  .pattern-examples .ex-es{color:var(--tinta);font-weight:600;font-size:14.5px;}
+
+  /* ---- verb conjugation ---- */
+  .conj-block{margin-top:14px;}
+  .conj-block h4{
+    font-size:13px;letter-spacing:.02em;color:var(--terracota);
+    border-bottom:2px solid var(--tinta);padding-bottom:5px;margin:0 0 4px;
   }
   table.conj{width:100%;border-collapse:collapse;}
-  table.conj tr{border-bottom:1px solid var(--line);}
+  table.conj tr{border-bottom:1px solid var(--linea);}
   table.conj tr:last-child{border-bottom:none;}
-  table.conj td{padding:12px 4px;font-size:16px;}
-  table.conj td.pron{color:#5c5344;font-size:14px;width:30%;}
+  table.conj td{padding:10px 4px;font-size:15px;vertical-align:middle;}
+  table.conj td.pron{color:var(--tinta-suave);font-size:13.5px;width:30%;}
   table.conj td.form{font-weight:600;}
-  table.conj td.form .trans{font-weight:400;font-size:13.5px;color:#5c5344;margin-top:3px;line-height:1.4;}
-  table.conj td.play{width:44px;text-align:right;}
-  table.conj button.mini-speak{
-    background:none;border:none;cursor:pointer;color:var(--teal-dark);
-    width:44px;height:44px;
-    display:flex;align-items:center;justify-content:center;
-  }
-  table.conj button.mini-speak svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;}
-  .nota{font-size:12px;color:#a89a7d;margin-top:8px;font-style:italic;}
+  table.conj td.form .trans{font-weight:400;font-size:12.5px;color:var(--tinta-suave);margin-top:2px;}
+  table.conj td.play{width:36px;text-align:right;}
 
-  /* ---- grammar & patterns ---- */
-  .g-card, .p-card{
-    background:var(--sand);
-    border:2px solid var(--ink);
-    border-radius:var(--radius);
-    padding:18px 20px;
-    margin-bottom:16px;
+  /* ---- Sound button ---- */
+  .snd{
+    display:inline-flex;align-items:center;justify-content:center;
+    width:30px;height:30px;border-radius:50%;
+    border:1px solid var(--linea-forte);background:var(--crema);
+    color:var(--tinta-suave);cursor:pointer;flex:none;
+    vertical-align:middle;margin-left:6px;
+    transition:background .15s,color .15s,border-color .15s;
   }
-  .g-card .g-head{
-    display:flex;
-    justify-content:space-between;
-    align-items:baseline;
-    gap:10px;
-    margin-bottom:8px;
-  }
-  .g-card .g-es{
-    font-family:'Fraunces',serif;
-    font-style:italic;
-    font-weight:600;
-    font-size:20px;
-    color:var(--teal-dark);
-  }
-  .g-card .g-zh-title{
-    font-size:13.5px;
-    font-weight:700;
-    color:var(--papaya-dark);
-    white-space:nowrap;
-  }
-  .g-card .g-explain{font-size:16px;line-height:1.6;margin-bottom:5px;}
-  .g-card .g-explain.en{color:#5c5344;font-style:italic;font-size:14.5px;}
-  .g-card .g-ex{
-    border-top:1px dashed var(--line);
-    margin-top:10px;
-    padding-top:10px;
-  }
-  .g-card .g-ex .es{font-weight:600;font-size:16px;}
-  .g-card .g-ex .zh-en{font-size:14px;color:#5c5344;line-height:1.5;}
+  .snd svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:1.9;}
+  .snd:hover,.snd.playing{background:var(--terracota);border-color:var(--terracota);color:var(--papel);}
+  .es-main .snd, .ex-es .snd, .pattern-template .snd{margin-left:8px;}
 
-  .p-card .p-es{
-    font-family:'Fraunces',serif;
-    font-weight:600;
-    font-size:19px;
-    color:var(--ink);
-    margin-bottom:2px;
-  }
-  .p-card .p-zh{font-size:15.5px;color:var(--teal);font-weight:600;margin-bottom:8px;}
-  .p-card .p-note{font-size:14px;color:#8a8071;font-style:italic;margin-bottom:12px;}
-  .p-card .p-ex{
-    background:var(--cream);
-    border:1px solid var(--line);
-    border-radius:var(--radius);
-    padding:10px 12px;
-    margin-bottom:8px;
-    display:flex;
-    justify-content:space-between;
-    align-items:flex-start;
-    gap:10px;
-  }
-  .p-card .p-ex:last-child{margin-bottom:0;}
-  .p-card .p-ex .txt .es{font-weight:600;font-size:16px;}
-  .p-card .p-ex .txt .zh-en{font-size:14px;color:#5c5344;line-height:1.5;}
-  .p-card button.mini-speak{
-    flex:0 0 44px;
-    width:44px;height:44px;
-    background:none;border:none;cursor:pointer;color:var(--teal-dark);
-    display:flex;align-items:center;justify-content:center;
-  }
-  .p-card button.mini-speak svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;}
+  footer{text-align:center;font-size:12px;color:var(--tinta-suave);margin-top:36px;}
 
-  footer{
-    text-align:center;
-    font-size:12px;
-    color:#a89a7d;
-    margin-top:40px;
-  }
-
-  @media (prefers-reduced-motion:no-preference){
-    .card{transition:transform .12s ease;}
-    .card:active{transform:scale(.99);}
+  @media (max-width:520px){
+    h1{font-size:24px;}
+    .sello{width:48px;height:48px;font-size:24px;}
   }
 </style>
 </head>
 <body>
 <div class="wrap">
 
-  <header class="top">
-    <div class="eyebrow-row">
+  <header>
+    <div class="sello">¡!</div>
+    <div>
       <h1>Español Diario</h1>
+      <p>詞彙・動詞變位・文法・句型 ｜ 拉美西語日常溝通</p>
     </div>
-    <p class="tagline">拉美西語日常溝通 · 詞彙、發音與規則動詞變位</p>
   </header>
 
-  <nav class="modes">
-    <button data-mode="vocab" class="active">詞彙</button>
-    <button data-mode="verbs">動詞變位</button>
-    <button data-mode="grammar">文法</button>
-    <button data-mode="patterns">句型</button>
+  <div class="beginner-banner">
+    <b>建議學習順序：</b>①詞彙(先熟悉高頻單字)→②動詞變位(現在式/過去式)→③文法→④句型。
+    每張卡片都可以點喇叭聽拉美西語（es-MX）發音。
+  </div>
+
+  <nav class="tabs">
+    <button data-tab="vocab" class="active">詞彙</button>
+    <button data-tab="verbs">動詞變位</button>
+    <button data-tab="grammar">文法</button>
+    <button data-tab="patterns">句型</button>
   </nav>
 
-  <!-- VOCAB PANEL -->
-  <section class="panel active" id="panel-vocab">
-    <div class="chips" id="chips"></div>
-
-    <div class="progress" id="progress"></div>
-    <div class="stage">
-      <button class="arrow-btn" id="prevBtn" aria-label="上一個">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
-      </button>
-
-      <div class="card" id="card">
-        <div class="front">
-          <div class="tag" id="cat-tag"></div>
-          <div class="spanish" id="sp-word"></div>
-          <div class="ipa" id="sp-ipa"></div>
-          <button class="speak-btn" id="speakFront" type="button">
-            <svg viewBox="0 0 24 24"><path d="M4 9v6h4l5 5V4L8 9H4z" stroke-linejoin="round"/><path d="M16 8.5a5 5 0 0 1 0 7"/><path d="M18.5 6a8.2 8.2 0 0 1 0 12"/></svg>
-            發音
-          </button>
-        </div>
-        <div class="back">
-          <div class="zh" id="bk-zh"></div>
-          <div class="en" id="bk-en"></div>
-          <div class="example">
-            <div class="es" id="ex-es"></div>
-            <div class="zh-en" id="ex-zh"></div>
-            <div class="zh-en" id="ex-en"></div>
-          </div>
-        </div>
-      </div>
-
-      <button class="arrow-btn" id="nextBtn" aria-label="下一個">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
-      </button>
-    </div>
+  <!-- VOCAB -->
+  <section id="tab-vocab" class="active">
     <div class="toolbar">
-      <button id="shuffleBtn">🔀 隨機排序</button>
-      <button id="resetBtn">↺ 重新排序</button>
+      <input type="text" id="vocab-search" placeholder="搜尋詞彙 / 中文 / 例句...">
+      <select id="vocab-category"><option value="all">全部分類</option></select>
+      <label class="chk"><input type="checkbox" id="vocab-hide-known"> 隱藏已學</label>
+      <span class="count-badge" id="vocab-count"></span>
     </div>
+    <div id="vocab-list"></div>
   </section>
 
-  <!-- VERBS PANEL -->
-  <section class="panel" id="panel-verbs">
-    <div class="verb-select-row">
-      <select id="verbSelect"></select>
+  <!-- VERBS -->
+  <section id="tab-verbs">
+    <div class="toolbar">
+      <input type="text" id="verb-search" placeholder="搜尋動詞...">
+      <label class="chk"><input type="checkbox" id="verb-hide-known"> 隱藏已學</label>
+      <span class="count-badge" id="verb-count"></span>
     </div>
-    <div class="verb-meaning" id="verbMeaning"></div>
-
-    <div class="conj-block">
-      <h3>現在式 Presente</h3>
-      <table class="conj" id="presTable"></table>
-    </div>
-    <div class="conj-block">
-      <h3>過去式 Pretérito</h3>
-      <table class="conj" id="pretTable"></table>
-    </div>
-    <div class="nota" id="verbNota"></div>
+    <div id="verbs-list"></div>
   </section>
 
-  <!-- GRAMMAR PANEL -->
-  <section class="panel" id="panel-grammar">
-    <div id="grammarList"></div>
+  <!-- GRAMMAR -->
+  <section id="tab-grammar">
+    <div class="toolbar">
+      <input type="text" id="grammar-search" placeholder="搜尋文法點...">
+      <label class="chk"><input type="checkbox" id="grammar-hide-known"> 隱藏已學</label>
+      <span class="count-badge" id="grammar-count"></span>
+    </div>
+    <div id="grammar-list"></div>
   </section>
 
-  <!-- PATTERNS PANEL -->
-  <section class="panel" id="panel-patterns">
-    <div id="patternsList"></div>
+  <!-- PATTERNS -->
+  <section id="tab-patterns">
+    <div class="toolbar">
+      <input type="text" id="pattern-search" placeholder="搜尋句型...">
+      <label class="chk"><input type="checkbox" id="pattern-hide-known"> 隱藏已學</label>
+      <span class="count-badge" id="pattern-count"></span>
+    </div>
+    <div id="patterns-list"></div>
   </section>
 
   <footer>拉美西語發音（es-MX）· 使用瀏覽器內建語音合成</footer>
 </div>
 
 <script>
-const PERSONS = ["yo","tú","él/ella/usted","nosotros","ustedes","ellos/ellas"];
-const SUBJ_ZH = ["我","你","他/她/您","我們","你們","他們/她們"];
-const SUBJ_EN = ["I","you","he/she/you","we","you (all)","they"];
+/* =========================================================
+   資料載入
+   ========================================================= */
+let VOCAB = [], VERBS = [], GRAMMAR = [], PATTERNS = [];
 
-function thirdPersonS(verb){
-  if (/[sxz]$|ch$|sh$/.test(verb)) return verb + 'es';
-  if (/[^aeiou]y$/.test(verb)) return verb.slice(0,-1) + 'ies';
-  return verb + 's';
-}
-function baseEn(ingles){
-  return ingles.replace(/^to\s+/, '').split('/')[0].trim();
-}
-
-let vocab = [];
-let verbs = [];
-let grammar = [];
-let patterns = [];
-let filtered = [];
-let currentIndex = 0;
-let currentCategory = "全部";
-
-// ---------- TTS ----------
-let esVoice = null;
-function pickVoice(){
-  const voices = window.speechSynthesis.getVoices();
-  esVoice = voices.find(v => v.lang === 'es-MX')
-        || voices.find(v => v.lang && v.lang.toLowerCase().startsWith('es-mx'))
-        || voices.find(v => v.lang && v.lang.toLowerCase().startsWith('es'))
-        || null;
-}
-if ('speechSynthesis' in window){
-  window.speechSynthesis.onvoiceschanged = pickVoice;
-  pickVoice();
-}
-function speak(text){
-  if (!('speechSynthesis' in window)) return;
-  window.speechSynthesis.cancel();
-  const u = new SpeechSynthesisUtterance(text);
-  u.lang = 'es-MX';
-  if (esVoice) u.voice = esVoice;
-  u.rate = 0.95;
-  window.speechSynthesis.speak(u);
-}
-
-// ---------- load data ----------
 Promise.all([
   fetch('vocab.json').then(r=>r.json()),
   fetch('verbs.json').then(r=>r.json()),
   fetch('grammar.json').then(r=>r.json()),
   fetch('patterns.json').then(r=>r.json())
 ]).then(([v, vb, gr, pt])=>{
-  vocab = v;
-  verbs = vb;
-  grammar = gr;
-  patterns = pt;
-  initCategories();
-  applyFilter("全部");
-  initVerbs();
+  VOCAB = v.map((d,i)=>({...d, id:'vocab-'+i}));
+  VERBS = vb.map((d,i)=>({...d, id:'verb-'+d.infinitivo}));
+  GRAMMAR = gr.map((d,i)=>({...d, id:'grammar-'+i}));
+  PATTERNS = pt.map((d,i)=>({...d, id:'pattern-'+i}));
+
+  initVocabCategories();
+  renderVocab();
+  renderVerbs();
   renderGrammar();
   renderPatterns();
 }).catch(err=>{
-  document.getElementById('card').innerHTML = '<p style="color:#a33">資料載入失敗，請確認 vocab.json / verbs.json 與 index.html 在同一層。</p>';
+  document.getElementById('vocab-list').innerHTML = '<p style="color:#a33">資料載入失敗，請確認 json 檔案與 index.html 在同一層。</p>';
   console.error(err);
 });
 
-// ---------- vocab mode ----------
-function initCategories(){
-  const cats = ["全部", ...new Set(vocab.map(w=>w.category))];
-  const chipsEl = document.getElementById('chips');
-  chipsEl.innerHTML = cats.map(c =>
-    `<button class="chip${c==='全部'?' active':''}" data-cat="${c}">${c}</button>`
-  ).join('');
-  chipsEl.querySelectorAll('.chip').forEach(btn=>{
-    btn.addEventListener('click', ()=>{
-      chipsEl.querySelectorAll('.chip').forEach(b=>b.classList.remove('active'));
-      btn.classList.add('active');
-      applyFilter(btn.dataset.cat);
-    });
-  });
+/* =========================================================
+   語音朗讀 (Web Speech API, es-MX)
+   ========================================================= */
+const canSpeak = 'speechSynthesis' in window;
+let esVoice = null;
+function loadEsVoice(){
+  if(!canSpeak) return;
+  const voices = speechSynthesis.getVoices();
+  esVoice = voices.find(v=>v.lang==='es-MX') || voices.find(v=>v.lang && v.lang.toLowerCase().startsWith('es')) || null;
 }
-
-function applyFilter(cat){
-  currentCategory = cat;
-  filtered = cat === "全部" ? [...vocab] : vocab.filter(w=>w.category===cat);
-  currentIndex = 0;
-  renderCard();
+if(canSpeak){
+  loadEsVoice();
+  speechSynthesis.onvoiceschanged = loadEsVoice;
 }
-
-function shuffleFiltered(){
-  for (let i = filtered.length -1; i>0; i--){
-    const j = Math.floor(Math.random()*(i+1));
-    [filtered[i], filtered[j]] = [filtered[j], filtered[i]];
+function speak(text, btn){
+  if(!canSpeak){ alert('這個瀏覽器不支援語音朗讀功能'); return; }
+  speechSynthesis.cancel();
+  const utter = new SpeechSynthesisUtterance(text);
+  utter.lang = 'es-MX';
+  if(esVoice) utter.voice = esVoice;
+  utter.rate = 0.95;
+  if(btn){
+    btn.classList.add('playing');
+    utter.onend = ()=>btn.classList.remove('playing');
+    utter.onerror = ()=>btn.classList.remove('playing');
   }
-  currentIndex = 0;
-  renderCard();
+  speechSynthesis.speak(utter);
 }
-
-function renderCard(){
-  if (!filtered.length){
-    document.getElementById('progress').textContent = '此分類暫無詞彙';
-    return;
-  }
-  const w = filtered[currentIndex];
-  document.getElementById('cat-tag').textContent = w.category;
-  document.getElementById('sp-word').textContent = w.spanish;
-  document.getElementById('sp-ipa').textContent = '/' + w.ipa + '/';
-  document.getElementById('bk-zh').textContent = w.chinese;
-  document.getElementById('bk-en').textContent = w.english;
-  document.getElementById('ex-es').textContent = w.example_es;
-  document.getElementById('ex-zh').textContent = w.example_zh;
-  document.getElementById('ex-en').textContent = w.example_en;
-  document.getElementById('progress').textContent = `${currentIndex+1} / ${filtered.length} · ${currentCategory}`;
-  document.getElementById('prevBtn').disabled = currentIndex === 0;
-  document.getElementById('nextBtn').disabled = currentIndex === filtered.length-1;
+const SND_SVG = '<svg viewBox="0 0 24 24"><path d="M4 9v6h4l5 5V4L8 9H4z"/><path d="M16 8.5a5 5 0 0 1 0 7"/><path d="M18.5 6a8.2 8.2 0 0 1 0 12"/></svg>';
+function sndBtn(text){
+  return `<span class="snd" data-say="${encodeURIComponent(text)}" title="播放發音">${SND_SVG}</span>`;
 }
-
-document.getElementById('speakFront').addEventListener('click', (e)=>{
+document.addEventListener('click', e=>{
+  const btn = e.target.closest('.snd');
+  if(!btn) return;
   e.stopPropagation();
-  if (filtered[currentIndex]) speak(filtered[currentIndex].spanish);
+  speak(decodeURIComponent(btn.dataset.say), btn);
 });
-document.getElementById('prevBtn').addEventListener('click', ()=>{
-  if (currentIndex>0){ currentIndex--; renderCard(); }
-});
-document.getElementById('nextBtn').addEventListener('click', ()=>{
-  if (currentIndex<filtered.length-1){ currentIndex++; renderCard(); }
-});
-document.getElementById('shuffleBtn').addEventListener('click', shuffleFiltered);
-document.getElementById('resetBtn').addEventListener('click', ()=>applyFilter(currentCategory));
 
-// ---------- mode switch ----------
-document.querySelectorAll('nav.modes button').forEach(btn=>{
+/* =========================================================
+   已學狀態 (localStorage)
+   ========================================================= */
+const KNOWN_KEY = 'es_app_known_v1';
+let knownMap = JSON.parse(localStorage.getItem(KNOWN_KEY) || '{}');
+function isKnown(id){ return !!knownMap[id]; }
+function toggleKnown(id, val){
+  knownMap[id] = val;
+  localStorage.setItem(KNOWN_KEY, JSON.stringify(knownMap));
+}
+
+/* =========================================================
+   Tabs
+   ========================================================= */
+document.querySelectorAll('nav.tabs button').forEach(btn=>{
   btn.addEventListener('click', ()=>{
-    document.querySelectorAll('nav.modes button').forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll('nav.tabs button').forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll('section').forEach(s=>s.classList.remove('active'));
     btn.classList.add('active');
-    document.querySelectorAll('section.panel').forEach(p=>p.classList.remove('active'));
-    document.getElementById('panel-' + btn.dataset.mode).classList.add('active');
+    document.getElementById('tab-'+btn.dataset.tab).classList.add('active');
   });
 });
 
-// ---------- verb mode ----------
-function initVerbs(){
-  const sel = document.getElementById('verbSelect');
-  sel.innerHTML = verbs.map(v=>
-    `<option value="${v.infinitivo}">${v.infinitivo} — ${v.chino}</option>`
-  ).join('');
-  sel.addEventListener('change', ()=>renderVerb(sel.value));
-  renderVerb(verbs[0].infinitivo);
-}
-
-function renderVerb(infinitivo){
-  const v = verbs.find(x=>x.infinitivo===infinitivo);
-  if (!v) return;
-  document.getElementById('verbMeaning').textContent = `${v.chino} · ${v.ingles}`;
-  const presForms = [v.pres_yo, v.pres_tu, v.pres_el_ella_usted, v.pres_nosotros, v.pres_ustedes, v.pres_ellos];
-  const pretForms = [v.pret_yo, v.pret_tu, v.pret_el_ella_usted, v.pret_nosotros, v.pret_ustedes, v.pret_ellos];
-  document.getElementById('presTable').innerHTML = buildRows(presForms, v, 'present');
-  document.getElementById('pretTable').innerHTML = buildRows(pretForms, v, 'past');
-  document.getElementById('verbNota').textContent = v.nota ? '＊ ' + v.nota : '';
-
-  document.querySelectorAll('#presTable button.mini-speak, #pretTable button.mini-speak').forEach(btn=>{
-    btn.addEventListener('click', ()=> speak(btn.dataset.word));
+/* =========================================================
+   詞彙
+   ========================================================= */
+function initVocabCategories(){
+  const cats = [...new Set(VOCAB.map(v=>v.category))];
+  const sel = document.getElementById('vocab-category');
+  cats.forEach(c=>{
+    const opt = document.createElement('option');
+    opt.value = c; opt.textContent = c;
+    sel.appendChild(opt);
   });
 }
+function renderVocab(){
+  const q = document.getElementById('vocab-search').value.trim().toLowerCase();
+  const cat = document.getElementById('vocab-category').value;
+  const hideKnown = document.getElementById('vocab-hide-known').checked;
+  const list = VOCAB.filter(v=>{
+    if(hideKnown && isKnown(v.id)) return false;
+    if(cat!=='all' && v.category!==cat) return false;
+    if(!q) return true;
+    return (v.spanish+v.chinese+v.english+v.example_es+v.example_zh).toLowerCase().includes(q);
+  });
+  document.getElementById('vocab-count').textContent = list.length + ' / ' + VOCAB.length + ' 字';
+  document.getElementById('vocab-list').innerHTML = list.length ? list.map(v=>`
+    <div class="item-card">
+      <div class="item-top">
+        <div class="item-main">
+          <div class="es-main">${v.spanish}<span class="ipa">/${v.ipa}/</span>${sndBtn(v.spanish)}</div>
+          <div class="meaning">${v.chinese} · ${v.english}</div>
+        </div>
+        <div class="level-tag">${v.category}</div>
+        <div class="known-check">
+          <input type="checkbox" data-id="${v.id}" ${isKnown(v.id)?'checked':''}>已學
+        </div>
+      </div>
+      <div class="example"><span class="ex-es">${v.example_es}</span>${sndBtn(v.example_es)}<br>${v.example_zh} ／ ${v.example_en}</div>
+    </div>`).join('') : `<div class="empty-note">沒有符合條件的詞彙</div>`;
+  document.getElementById('vocab-list').querySelectorAll('input[type=checkbox]').forEach(cb=>{
+    cb.addEventListener('change', e=>{ toggleKnown(e.target.dataset.id, e.target.checked); renderVocab(); });
+  });
+}
+document.getElementById('vocab-search').addEventListener('input', renderVocab);
+document.getElementById('vocab-category').addEventListener('change', renderVocab);
+document.getElementById('vocab-hide-known').addEventListener('change', renderVocab);
 
-function buildRows(forms, v, tense){
+/* =========================================================
+   動詞變位
+   ========================================================= */
+const PERSONS = ["yo","tú","él/ella/usted","nosotros","ustedes","ellos/ellas"];
+const SUBJ_ZH = ["我","你","他/她/您","我們","你們","他們/她們"];
+const SUBJ_EN = ["I","you","he/she/you","we","you (all)","they"];
+function thirdPersonS(verb){
+  if(/[sxz]$|ch$|sh$/.test(verb)) return verb+'es';
+  if(/[^aeiou]y$/.test(verb)) return verb.slice(0,-1)+'ies';
+  return verb+'s';
+}
+function baseEn(ingles){ return ingles.replace(/^to\s+/, '').split('/')[0].trim(); }
+function conjRows(forms, v, tense){
   const base = baseEn(v.ingles);
   return PERSONS.map((p,i)=>{
-    const zh = SUBJ_ZH[i] + v.chino + (tense === 'past' ? '了' : '');
-    const enVerb = (tense === 'present' && i === 2) ? thirdPersonS(base) : base;
-    const en = SUBJ_EN[i] + ' ' + enVerb + (tense === 'past' ? ' (past)' : '');
-    return `
-    <tr>
+    const zh = SUBJ_ZH[i] + v.chino + (tense==='past' ? '了' : '');
+    const enVerb = (tense==='present' && i===2) ? thirdPersonS(base) : base;
+    const en = SUBJ_EN[i] + ' ' + enVerb + (tense==='past' ? ' (past)' : '');
+    return `<tr>
       <td class="pron">${p}</td>
       <td class="form">${forms[i]}<div class="trans">${zh} · ${en}</div></td>
-      <td class="play"><button class="mini-speak" data-word="${forms[i]}">
-        <svg viewBox="0 0 24 24"><path d="M4 9v6h4l5 5V4L8 9H4z"/><path d="M16 8.5a5 5 0 0 1 0 7"/><path d="M18.5 6a8.2 8.2 0 0 1 0 12"/></svg>
-      </button></td>
+      <td class="play">${sndBtn(forms[i])}</td>
     </tr>`;
   }).join('');
 }
-
-function renderGrammar(){
-  document.getElementById('grammarList').innerHTML = grammar.map(g => `
-    <div class="g-card">
-      <div class="g-head">
-        <div class="g-es">${g.title_es}</div>
-        <div class="g-zh-title">${g.title_zh}</div>
+function renderVerbs(){
+  const q = document.getElementById('verb-search').value.trim().toLowerCase();
+  const hideKnown = document.getElementById('verb-hide-known').checked;
+  const list = VERBS.filter(v=>{
+    if(hideKnown && isKnown(v.id)) return false;
+    if(!q) return true;
+    return (v.infinitivo+v.chino+v.ingles).toLowerCase().includes(q);
+  });
+  document.getElementById('verb-count').textContent = list.length + ' / ' + VERBS.length + ' 個';
+  document.getElementById('verbs-list').innerHTML = list.length ? list.map(v=>{
+    const presForms = [v.pres_yo, v.pres_tu, v.pres_el_ella_usted, v.pres_nosotros, v.pres_ustedes, v.pres_ellos];
+    const pretForms = [v.pret_yo, v.pret_tu, v.pret_el_ella_usted, v.pret_nosotros, v.pret_ustedes, v.pret_ellos];
+    return `
+    <div class="item-card expandable" data-id="${v.id}">
+      <div class="item-top">
+        <div class="item-main">
+          <div class="es-main">${v.infinitivo}${sndBtn(v.infinitivo)}</div>
+          <div class="meaning">${v.chino} · ${v.ingles}</div>
+        </div>
+        <div class="level-tag">-${v.tipo}</div>
+        <div class="known-check">
+          <input type="checkbox" data-id="${v.id}" ${isKnown(v.id)?'checked':''} onclick="event.stopPropagation()">已學
+        </div>
       </div>
-      <div class="g-explain">${g.zh}</div>
-      <div class="g-explain en">${g.en}</div>
-      <div class="g-ex">
-        <div class="es">${g.ex_es}</div>
-        <div class="zh-en">${g.ex_zh}</div>
-        <div class="zh-en">${g.ex_en}</div>
+      <div class="expand-body">
+        <div class="conj-block">
+          <h4>現在式 Presente</h4>
+          <table class="conj">${conjRows(presForms, v, 'present')}</table>
+        </div>
+        <div class="conj-block">
+          <h4>過去式 Pretérito</h4>
+          <table class="conj">${conjRows(pretForms, v, 'past')}</table>
+        </div>
+        ${v.nota ? `<div class="pattern-note" style="margin-top:8px;">＊ ${v.nota}</div>` : ''}
       </div>
-    </div>`).join('');
-}
-
-function renderPatterns(){
-  document.getElementById('patternsList').innerHTML = patterns.map(p => `
-    <div class="p-card">
-      <div class="p-es">${p.pattern_es}</div>
-      <div class="p-zh">${p.pattern_zh}</div>
-      <div class="p-note">${p.note}</div>
-      ${p.examples.map(ex => `
-        <div class="p-ex">
-          <div class="txt">
-            <div class="es">${ex.es}</div>
-            <div class="zh-en">${ex.zh}</div>
-            <div class="zh-en">${ex.en}</div>
-          </div>
-          <button class="mini-speak" data-word="${ex.es}">
-            <svg viewBox="0 0 24 24"><path d="M4 9v6h4l5 5V4L8 9H4z"/><path d="M16 8.5a5 5 0 0 1 0 7"/><path d="M18.5 6a8.2 8.2 0 0 1 0 12"/></svg>
-          </button>
-        </div>`).join('')}
-    </div>`).join('');
-  document.querySelectorAll('#patternsList button.mini-speak').forEach(btn=>{
-    btn.addEventListener('click', ()=> speak(btn.dataset.word));
+    </div>`;
+  }).join('') : `<div class="empty-note">沒有符合條件的動詞</div>`;
+  document.getElementById('verbs-list').querySelectorAll('.item-card').forEach(card=>{
+    card.addEventListener('click', e=>{
+      if(e.target.closest('.snd') || e.target.closest('.known-check')) return;
+      card.classList.toggle('open');
+    });
+  });
+  document.getElementById('verbs-list').querySelectorAll('input[type=checkbox]').forEach(cb=>{
+    cb.addEventListener('change', e=>{ toggleKnown(e.target.dataset.id, e.target.checked); renderVerbs(); });
   });
 }
+document.getElementById('verb-search').addEventListener('input', renderVerbs);
+document.getElementById('verb-hide-known').addEventListener('change', renderVerbs);
+
+/* =========================================================
+   文法
+   ========================================================= */
+function renderGrammar(){
+  const q = document.getElementById('grammar-search').value.trim().toLowerCase();
+  const hideKnown = document.getElementById('grammar-hide-known').checked;
+  const list = GRAMMAR.filter(g=>{
+    if(hideKnown && isKnown(g.id)) return false;
+    if(!q) return true;
+    return (g.title_es+g.title_zh+g.zh+g.en+g.ex_es).toLowerCase().includes(q);
+  });
+  document.getElementById('grammar-count').textContent = list.length + ' / ' + GRAMMAR.length + ' 點';
+  document.getElementById('grammar-list').innerHTML = list.length ? list.map(g=>`
+    <div class="item-card expandable" data-id="${g.id}">
+      <div class="item-top">
+        <div class="item-main">
+          <div class="g-title">${g.title_es}<span class="g-zh">${g.title_zh}</span></div>
+        </div>
+        <div class="known-check">
+          <input type="checkbox" data-id="${g.id}" ${isKnown(g.id)?'checked':''} onclick="event.stopPropagation()">已學
+        </div>
+      </div>
+      <div class="expand-body">
+        <p style="margin:6px 0;">${g.zh}</p>
+        <p style="margin:0 0 8px;color:var(--tinta-suave);font-style:italic;font-size:14px;">${g.en}</p>
+        <div class="example"><span class="ex-es">${g.ex_es}</span>${sndBtn(g.ex_es)}<br>${g.ex_zh} ／ ${g.ex_en}</div>
+      </div>
+    </div>`).join('') : `<div class="empty-note">沒有符合條件的文法點</div>`;
+  document.getElementById('grammar-list').querySelectorAll('.item-card').forEach(card=>{
+    card.addEventListener('click', e=>{
+      if(e.target.closest('.snd') || e.target.closest('.known-check')) return;
+      card.classList.toggle('open');
+    });
+  });
+  document.getElementById('grammar-list').querySelectorAll('input[type=checkbox]').forEach(cb=>{
+    cb.addEventListener('change', e=>{ toggleKnown(e.target.dataset.id, e.target.checked); renderGrammar(); });
+  });
+}
+document.getElementById('grammar-search').addEventListener('input', renderGrammar);
+document.getElementById('grammar-hide-known').addEventListener('change', renderGrammar);
+
+/* =========================================================
+   句型
+   ========================================================= */
+function renderPatterns(){
+  const q = document.getElementById('pattern-search').value.trim().toLowerCase();
+  const hideKnown = document.getElementById('pattern-hide-known').checked;
+  const list = PATTERNS.filter(p=>{
+    if(hideKnown && isKnown(p.id)) return false;
+    if(!q) return true;
+    const hay = (p.pattern_es+p.pattern_zh+p.note+p.examples.map(e=>e.es+e.zh+e.en).join('')).toLowerCase();
+    return hay.includes(q);
+  });
+  document.getElementById('pattern-count').textContent = list.length + ' / ' + PATTERNS.length + ' 句型';
+  document.getElementById('patterns-list').innerHTML = list.length ? list.map(p=>`
+    <div class="item-card">
+      <div class="item-top">
+        <div class="item-main">
+          <div class="pattern-template">${p.pattern_es}${sndBtn(p.pattern_es)}</div>
+          <div class="pattern-meaning">${p.pattern_zh}</div>
+          <div class="pattern-note">${p.note}</div>
+        </div>
+        <div class="known-check">
+          <input type="checkbox" data-id="${p.id}" ${isKnown(p.id)?'checked':''}>已學
+        </div>
+      </div>
+      <ul class="pattern-examples">
+        ${p.examples.map(e=>`<li><span class="ex-es">${e.es}</span>${sndBtn(e.es)}<br>${e.zh} ／ ${e.en}</li>`).join('')}
+      </ul>
+    </div>`).join('') : `<div class="empty-note">沒有符合條件的句型</div>`;
+  document.getElementById('patterns-list').querySelectorAll('input[type=checkbox]').forEach(cb=>{
+    cb.addEventListener('change', e=>{ toggleKnown(e.target.dataset.id, e.target.checked); renderPatterns(); });
+  });
+}
+document.getElementById('pattern-search').addEventListener('input', renderPatterns);
+document.getElementById('pattern-hide-known').addEventListener('change', renderPatterns);
 </script>
 </body>
 </html>
