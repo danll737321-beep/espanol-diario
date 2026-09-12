@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Español Diario · 西語日常溝通</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FBF6EC;
+    --sand:#EFE4CE;
+    --ink:#241F18;
+    --teal:#1C4A46;
+    --teal-dark:#123331;
+    --papaya:#E2662B;
+    --marigold:#EFAE34;
+    --line:#D9CBA8;
+    --radius:2px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--cream);
+    color:var(--ink);
+    font-family:'Inter',sans-serif;
+    min-height:100vh;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:640px;margin:0 auto;padding:28px 20px 80px;}
+
+  header.top{margin-bottom:22px;}
+  .eyebrow-row{display:flex;align-items:baseline;justify-content:space-between;}
+  h1{
+    font-family:'Fraunces',serif;
+    font-weight:700;
+    font-style:italic;
+    font-size:clamp(30px,7vw,42px);
+    margin:0 0 4px;
+    color:var(--teal-dark);
+    letter-spacing:-0.01em;
+  }
+  .tagline{
+    font-size:14px;
+    color:#5c5344;
+    margin:0;
+    max-width:46ch;
+  }
+
+  nav.modes{
+    display:flex;
+    gap:0;
+    margin:24px 0 20px;
+    border-bottom:2px solid var(--ink);
+  }
+  nav.modes button{
+    flex:1;
+    background:none;
+    border:none;
+    font-family:'Inter',sans-serif;
+    font-weight:600;
+    font-size:15px;
+    padding:10px 6px 12px;
+    cursor:pointer;
+    color:#8a8071;
+    border-bottom:3px solid transparent;
+    margin-bottom:-2px;
+    transition:color .15s ease;
+  }
+  nav.modes button.active{
+    color:var(--ink);
+    border-bottom-color:var(--papaya);
+  }
+
+  section.panel{display:none;}
+  section.panel.active{display:block;}
+
+  /* ---- category chips ---- */
+  .chips{
+    display:flex;
+    gap:8px;
+    overflow-x:auto;
+    padding-bottom:10px;
+    margin-bottom:18px;
+    scrollbar-width:thin;
+  }
+  .chips::-webkit-scrollbar{height:5px;}
+  .chips::-webkit-scrollbar-thumb{background:var(--line);}
+  .chip{
+    flex:0 0 auto;
+    padding:7px 14px;
+    border:1.5px solid var(--ink);
+    border-radius:20px;
+    font-size:13px;
+    font-weight:600;
+    background:var(--cream);
+    color:var(--ink);
+    cursor:pointer;
+    white-space:nowrap;
+  }
+  .chip.active{background:var(--ink);color:var(--cream);}
+
+  /* ---- flashcard ---- */
+  .stage{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    margin-bottom:14px;
+  }
+  .arrow-btn{
+    background:none;border:none;cursor:pointer;
+    width:42px;height:42px;
+    display:flex;align-items:center;justify-content:center;
+    color:var(--teal-dark);
+  }
+  .arrow-btn svg{width:22px;height:22px;}
+  .arrow-btn:disabled{opacity:.25;cursor:default;}
+
+  .card{
+    flex:1;
+    max-width:440px;
+    min-height:260px;
+    background:var(--sand);
+    border:2px solid var(--ink);
+    border-radius:var(--radius);
+    position:relative;
+    padding:30px 26px 24px;
+    cursor:pointer;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+  }
+  .card::before{
+    content:"";
+    position:absolute;
+    top:-1px;left:16px;right:16px;
+    height:10px;
+    background-image:radial-gradient(circle at 8px 0px, transparent 6px, var(--sand) 6.5px);
+    background-size:16px 10px;
+    background-repeat:repeat-x;
+  }
+  .card .tag{
+    position:absolute;
+    top:12px;left:14px;
+    font-size:11px;
+    font-weight:600;
+    color:var(--teal);
+    letter-spacing:.02em;
+  }
+  .card .spanish{
+    font-family:'Fraunces',serif;
+    font-weight:600;
+    font-size:clamp(26px,6vw,34px);
+    color:var(--ink);
+    margin:6px 0 6px;
+    line-height:1.15;
+  }
+  .card .ipa{
+    font-size:15px;
+    color:var(--teal);
+    margin-bottom:14px;
+  }
+  .speak-btn{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    background:var(--teal-dark);
+    color:var(--cream);
+    border:none;
+    padding:8px 16px;
+    border-radius:20px;
+    font-size:13px;
+    font-weight:600;
+    cursor:pointer;
+  }
+  .speak-btn svg{width:14px;height:14px;fill:var(--cream);}
+  .card .back{display:none;width:100%;}
+  .card.flipped .front{display:none;}
+  .card.flipped .back{display:block;}
+  .card .zh{font-size:20px;font-weight:700;margin-bottom:4px;}
+  .card .en{font-size:14px;color:#5c5344;margin-bottom:16px;font-style:italic;}
+  .card .example{
+    border-top:1px dashed var(--line);
+    padding-top:14px;
+    text-align:left;
+  }
+  .card .example .es{font-weight:600;font-size:14px;margin-bottom:3px;}
+  .card .example .zh-en{font-size:12.5px;color:#5c5344;}
+  .hint{
+    text-align:center;
+    font-size:12px;
+    color:#a89a7d;
+    margin-bottom:26px;
+  }
+  .progress{
+    text-align:center;
+    font-size:13px;
+    font-weight:600;
+    color:var(--teal-dark);
+    margin-bottom:6px;
+  }
+  .toolbar{display:flex;justify-content:center;gap:10px;margin-bottom:6px;}
+  .toolbar button{
+    background:none;
+    border:1.5px solid var(--ink);
+    border-radius:20px;
+    padding:6px 14px;
+    font-size:12px;
+    font-weight:600;
+    cursor:pointer;
+    color:var(--ink);
+  }
+
+  /* ---- verb mode ---- */
+  .verb-select-row{margin-bottom:18px;}
+  select{
+    width:100%;
+    font-family:'Inter',sans-serif;
+    font-size:16px;
+    font-weight:600;
+    padding:12px 14px;
+    border:2px solid var(--ink);
+    border-radius:var(--radius);
+    background:var(--cream);
+    color:var(--ink);
+  }
+  .verb-meaning{
+    font-family:'Fraunces',serif;
+    font-style:italic;
+    font-size:18px;
+    color:var(--teal-dark);
+    margin:14px 0 20px;
+  }
+  .conj-block{margin-bottom:22px;}
+  .conj-block h3{
+    font-size:13px;
+    text-transform:none;
+    letter-spacing:.02em;
+    color:var(--papaya);
+    border-bottom:2px solid var(--ink);
+    padding-bottom:6px;
+    margin-bottom:0;
+  }
+  table.conj{width:100%;border-collapse:collapse;}
+  table.conj tr{border-bottom:1px solid var(--line);}
+  table.conj tr:last-child{border-bottom:none;}
+  table.conj td{padding:10px 4px;font-size:15px;}
+  table.conj td.pron{color:#5c5344;font-size:13px;width:34%;}
+  table.conj td.form{font-weight:600;}
+  table.conj td.play{width:36px;text-align:right;}
+  table.conj button.mini-speak{
+    background:none;border:none;cursor:pointer;color:var(--teal-dark);
+    display:flex;align-items:center;justify-content:center;
+  }
+  table.conj button.mini-speak svg{width:17px;height:17px;}
+  .nota{font-size:12px;color:#a89a7d;margin-top:8px;font-style:italic;}
+
+  footer{
+    text-align:center;
+    font-size:12px;
+    color:#a89a7d;
+    margin-top:40px;
+  }
+
+  @media (prefers-reduced-motion:no-preference){
+    .card{transition:transform .12s ease;}
+    .card:active{transform:scale(.99);}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <div class="eyebrow-row">
+      <h1>Español Diario</h1>
+    </div>
+    <p class="tagline">拉美西語日常溝通 · 詞彙、發音與規則動詞變位</p>
+  </header>
+
+  <nav class="modes">
+    <button data-mode="vocab" class="active">詞彙 Vocabulario</button>
+    <button data-mode="verbs">動詞變位 Verbos</button>
+  </nav>
+
+  <!-- VOCAB PANEL -->
+  <section class="panel active" id="panel-vocab">
+    <div class="chips" id="chips"></div>
+
+    <div class="progress" id="progress"></div>
+    <div class="stage">
+      <button class="arrow-btn" id="prevBtn" aria-label="上一個">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+
+      <div class="card" id="card">
+        <div class="front">
+          <div class="tag" id="cat-tag"></div>
+          <div class="spanish" id="sp-word"></div>
+          <div class="ipa" id="sp-ipa"></div>
+          <button class="speak-btn" id="speakFront" type="button">
+            <svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3a4.5 4.5 0 0 0-2.5-4.03v8.06A4.5 4.5 0 0 0 16.5 12z"/></svg>
+            發音
+          </button>
+        </div>
+        <div class="back">
+          <div class="zh" id="bk-zh"></div>
+          <div class="en" id="bk-en"></div>
+          <div class="example">
+            <div class="es" id="ex-es"></div>
+            <div class="zh-en" id="ex-zh"></div>
+            <div class="zh-en" id="ex-en"></div>
+          </div>
+        </div>
+      </div>
+
+      <button class="arrow-btn" id="nextBtn" aria-label="下一個">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+    </div>
+    <div class="hint">點卡片翻面看中英解釋</div>
+    <div class="toolbar">
+      <button id="shuffleBtn">🔀 隨機排序</button>
+      <button id="resetBtn">↺ 重新排序</button>
+    </div>
+  </section>
+
+  <!-- VERBS PANEL -->
+  <section class="panel" id="panel-verbs">
+    <div class="verb-select-row">
+      <select id="verbSelect"></select>
+    </div>
+    <div class="verb-meaning" id="verbMeaning"></div>
+
+    <div class="conj-block">
+      <h3>現在式 Presente</h3>
+      <table class="conj" id="presTable"></table>
+    </div>
+    <div class="conj-block">
+      <h3>過去式 Pretérito</h3>
+      <table class="conj" id="pretTable"></table>
+    </div>
+    <div class="nota" id="verbNota"></div>
+  </section>
+
+  <footer>拉美西語發音（es-MX）· 使用瀏覽器內建語音合成</footer>
+</div>
+
+<script>
+const PERSONS = ["yo","tú","él/ella/usted","nosotros","ustedes","ellos/ellas"];
+
+let vocab = [];
+let verbs = [];
+let filtered = [];
+let currentIndex = 0;
+let currentCategory = "全部";
+
+// ---------- TTS ----------
+let esVoice = null;
+function pickVoice(){
+  const voices = window.speechSynthesis.getVoices();
+  esVoice = voices.find(v => v.lang === 'es-MX')
+        || voices.find(v => v.lang && v.lang.toLowerCase().startsWith('es-mx'))
+        || voices.find(v => v.lang && v.lang.toLowerCase().startsWith('es'))
+        || null;
+}
+if ('speechSynthesis' in window){
+  window.speechSynthesis.onvoiceschanged = pickVoice;
+  pickVoice();
+}
+function speak(text){
+  if (!('speechSynthesis' in window)) return;
+  window.speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = 'es-MX';
+  if (esVoice) u.voice = esVoice;
+  u.rate = 0.95;
+  window.speechSynthesis.speak(u);
+}
+
+// ---------- load data ----------
+Promise.all([
+  fetch('vocab.json').then(r=>r.json()),
+  fetch('verbs.json').then(r=>r.json())
+]).then(([v, vb])=>{
+  vocab = v;
+  verbs = vb;
+  initCategories();
+  applyFilter("全部");
+  initVerbs();
+}).catch(err=>{
+  document.getElementById('card').innerHTML = '<p style="color:#a33">資料載入失敗，請確認 vocab.json / verbs.json 與 index.html 在同一層。</p>';
+  console.error(err);
+});
+
+// ---------- vocab mode ----------
+function initCategories(){
+  const cats = ["全部", ...new Set(vocab.map(w=>w.category))];
+  const chipsEl = document.getElementById('chips');
+  chipsEl.innerHTML = cats.map(c =>
+    `<button class="chip${c==='全部'?' active':''}" data-cat="${c}">${c}</button>`
+  ).join('');
+  chipsEl.querySelectorAll('.chip').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      chipsEl.querySelectorAll('.chip').forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      applyFilter(btn.dataset.cat);
+    });
+  });
+}
+
+function applyFilter(cat){
+  currentCategory = cat;
+  filtered = cat === "全部" ? [...vocab] : vocab.filter(w=>w.category===cat);
+  currentIndex = 0;
+  renderCard();
+}
+
+function shuffleFiltered(){
+  for (let i = filtered.length -1; i>0; i--){
+    const j = Math.floor(Math.random()*(i+1));
+    [filtered[i], filtered[j]] = [filtered[j], filtered[i]];
+  }
+  currentIndex = 0;
+  renderCard();
+}
+
+function renderCard(){
+  const card = document.getElementById('card');
+  card.classList.remove('flipped');
+  if (!filtered.length){
+    document.getElementById('progress').textContent = '此分類暫無詞彙';
+    return;
+  }
+  const w = filtered[currentIndex];
+  document.getElementById('cat-tag').textContent = w.category;
+  document.getElementById('sp-word').textContent = w.spanish;
+  document.getElementById('sp-ipa').textContent = '/' + w.ipa + '/';
+  document.getElementById('bk-zh').textContent = w.chinese;
+  document.getElementById('bk-en').textContent = w.english;
+  document.getElementById('ex-es').textContent = w.example_es;
+  document.getElementById('ex-zh').textContent = w.example_zh;
+  document.getElementById('ex-en').textContent = w.example_en;
+  document.getElementById('progress').textContent = `${currentIndex+1} / ${filtered.length} · ${currentCategory}`;
+  document.getElementById('prevBtn').disabled = currentIndex === 0;
+  document.getElementById('nextBtn').disabled = currentIndex === filtered.length-1;
+}
+
+document.getElementById('card').addEventListener('click', ()=>{
+  document.getElementById('card').classList.toggle('flipped');
+});
+document.getElementById('speakFront').addEventListener('click', (e)=>{
+  e.stopPropagation();
+  if (filtered[currentIndex]) speak(filtered[currentIndex].spanish);
+});
+document.getElementById('prevBtn').addEventListener('click', ()=>{
+  if (currentIndex>0){ currentIndex--; renderCard(); }
+});
+document.getElementById('nextBtn').addEventListener('click', ()=>{
+  if (currentIndex<filtered.length-1){ currentIndex++; renderCard(); }
+});
+document.getElementById('shuffleBtn').addEventListener('click', shuffleFiltered);
+document.getElementById('resetBtn').addEventListener('click', ()=>applyFilter(currentCategory));
+
+// ---------- mode switch ----------
+document.querySelectorAll('nav.modes button').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    document.querySelectorAll('nav.modes button').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('section.panel').forEach(p=>p.classList.remove('active'));
+    document.getElementById('panel-' + btn.dataset.mode).classList.add('active');
+  });
+});
+
+// ---------- verb mode ----------
+function initVerbs(){
+  const sel = document.getElementById('verbSelect');
+  sel.innerHTML = verbs.map(v=>
+    `<option value="${v.infinitivo}">${v.infinitivo} — ${v.chino}</option>`
+  ).join('');
+  sel.addEventListener('change', ()=>renderVerb(sel.value));
+  renderVerb(verbs[0].infinitivo);
+}
+
+function renderVerb(infinitivo){
+  const v = verbs.find(x=>x.infinitivo===infinitivo);
+  if (!v) return;
+  document.getElementById('verbMeaning').textContent = `${v.chino} · ${v.ingles}`;
+  const presForms = [v.pres_yo, v.pres_tu, v.pres_el_ella_usted, v.pres_nosotros, v.pres_ustedes, v.pres_ellos];
+  const pretForms = [v.pret_yo, v.pret_tu, v.pret_el_ella_usted, v.pret_nosotros, v.pret_ustedes, v.pret_ellos];
+  document.getElementById('presTable').innerHTML = buildRows(presForms);
+  document.getElementById('pretTable').innerHTML = buildRows(pretForms);
+  document.getElementById('verbNota').textContent = v.nota ? '＊ ' + v.nota : '';
+
+  document.querySelectorAll('button.mini-speak').forEach(btn=>{
+    btn.addEventListener('click', ()=> speak(btn.dataset.word));
+  });
+}
+
+function buildRows(forms){
+  return PERSONS.map((p,i)=>`
+    <tr>
+      <td class="pron">${p}</td>
+      <td class="form">${forms[i]}</td>
+      <td class="play"><button class="mini-speak" data-word="${forms[i]}">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3a4.5 4.5 0 0 0-2.5-4.03v8.06A4.5 4.5 0 0 0 16.5 12z"/></svg>
+      </button></td>
+    </tr>`).join('');
+}
+</script>
+</body>
+</html>
