@@ -2,7 +2,7 @@
 <html lang="zh-Hant">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Español Diario · 西語日常溝通</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -14,6 +14,7 @@
     --teal:#1C4A46;
     --teal-dark:#123331;
     --papaya:#E2662B;
+    --papaya-dark:#B84E1C;
     --marigold:#EFAE34;
     --line:#D9CBA8;
     --radius:2px;
@@ -25,9 +26,16 @@
     color:var(--ink);
     font-family:'Inter',sans-serif;
     min-height:100vh;
+    font-size:16px;
+    line-height:1.5;
     -webkit-font-smoothing:antialiased;
+    -webkit-text-size-adjust:100%;
   }
-  .wrap{max-width:640px;margin:0 auto;padding:28px 20px 80px;}
+  .wrap{
+    max-width:640px;
+    margin:0 auto;
+    padding:calc(env(safe-area-inset-top) + 20px) 18px calc(env(safe-area-inset-bottom) + 60px);
+  }
 
   header.top{margin-bottom:22px;}
   .eyebrow-row{display:flex;align-items:baseline;justify-content:space-between;}
@@ -41,7 +49,7 @@
     letter-spacing:-0.01em;
   }
   .tagline{
-    font-size:14px;
+    font-size:15px;
     color:#5c5344;
     margin:0;
     max-width:46ch;
@@ -59,8 +67,9 @@
     border:none;
     font-family:'Inter',sans-serif;
     font-weight:600;
-    font-size:13.5px;
-    padding:10px 2px 12px;
+    font-size:14px;
+    padding:13px 2px;
+    min-height:44px;
     cursor:pointer;
     color:#8a8071;
     border-bottom:3px solid transparent;
@@ -88,10 +97,13 @@
   .chips::-webkit-scrollbar-thumb{background:var(--line);}
   .chip{
     flex:0 0 auto;
-    padding:7px 14px;
+    padding:9px 16px;
+    min-height:38px;
+    display:flex;
+    align-items:center;
     border:1.5px solid var(--ink);
     border-radius:20px;
-    font-size:13px;
+    font-size:14px;
     font-weight:600;
     background:var(--cream);
     color:var(--ink);
@@ -110,11 +122,12 @@
   }
   .arrow-btn{
     background:none;border:none;cursor:pointer;
-    width:42px;height:42px;
+    width:44px;height:44px;
     display:flex;align-items:center;justify-content:center;
     color:var(--teal-dark);
+    flex:0 0 44px;
   }
-  .arrow-btn svg{width:22px;height:22px;}
+  .arrow-btn svg{width:24px;height:24px;}
   .arrow-btn:disabled{opacity:.25;cursor:default;}
 
   .card{
@@ -144,7 +157,7 @@
   .card .tag{
     position:absolute;
     top:12px;left:14px;
-    font-size:11px;
+    font-size:12px;
     font-weight:600;
     color:var(--teal);
     letter-spacing:.02em;
@@ -158,43 +171,39 @@
     line-height:1.15;
   }
   .card .ipa{
-    font-size:15px;
+    font-size:16px;
     color:var(--teal);
     margin-bottom:14px;
   }
   .speak-btn{
     display:inline-flex;
     align-items:center;
-    gap:6px;
+    gap:8px;
     background:var(--teal-dark);
     color:var(--cream);
     border:none;
-    padding:8px 16px;
-    border-radius:20px;
-    font-size:13px;
+    padding:11px 20px;
+    min-height:44px;
+    border-radius:24px;
+    font-size:15px;
     font-weight:600;
     cursor:pointer;
   }
-  .speak-btn svg{width:14px;height:14px;fill:var(--cream);}
+  .speak-btn svg{width:18px;height:18px;fill:none;stroke:var(--cream);stroke-width:1.8;}
   .card .back{width:100%;margin-top:16px;}
-  .card .zh{font-size:20px;font-weight:700;margin-bottom:4px;}
-  .card .en{font-size:14px;color:#5c5344;margin-bottom:16px;font-style:italic;}
+  .card .zh{font-size:22px;font-weight:700;margin-bottom:4px;}
+  .card .en{font-size:15px;color:#5c5344;margin-bottom:16px;font-style:italic;}
   .card .example{
     border-top:1px dashed var(--line);
     padding-top:14px;
     text-align:left;
   }
-  .card .example .es{font-weight:600;font-size:14px;margin-bottom:3px;}
-  .card .example .zh-en{font-size:12.5px;color:#5c5344;}
-  .hint{
-    text-align:center;
-    font-size:12px;
-    color:#a89a7d;
-    margin-bottom:26px;
-  }
+  .card .example .es{font-weight:600;font-size:16px;margin-bottom:4px;}
+  .card .example .zh-en{font-size:14px;color:#5c5344;line-height:1.5;}
+  
   .progress{
     text-align:center;
-    font-size:13px;
+    font-size:14px;
     font-weight:600;
     color:var(--teal-dark);
     margin-bottom:6px;
@@ -233,10 +242,10 @@
   }
   .conj-block{margin-bottom:22px;}
   .conj-block h3{
-    font-size:13px;
+    font-size:14px;
     text-transform:none;
     letter-spacing:.02em;
-    color:var(--papaya);
+    color:var(--papaya-dark);
     border-bottom:2px solid var(--ink);
     padding-bottom:6px;
     margin-bottom:0;
@@ -244,16 +253,17 @@
   table.conj{width:100%;border-collapse:collapse;}
   table.conj tr{border-bottom:1px solid var(--line);}
   table.conj tr:last-child{border-bottom:none;}
-  table.conj td{padding:10px 4px;font-size:15px;}
-  table.conj td.pron{color:#5c5344;font-size:13px;width:34%;}
+  table.conj td{padding:12px 4px;font-size:16px;}
+  table.conj td.pron{color:#5c5344;font-size:14px;width:30%;}
   table.conj td.form{font-weight:600;}
-  table.conj td.form .trans{font-weight:400;font-size:12px;color:#5c5344;margin-top:2px;}
-  table.conj td.play{width:36px;text-align:right;}
+  table.conj td.form .trans{font-weight:400;font-size:13.5px;color:#5c5344;margin-top:3px;line-height:1.4;}
+  table.conj td.play{width:44px;text-align:right;}
   table.conj button.mini-speak{
     background:none;border:none;cursor:pointer;color:var(--teal-dark);
+    width:44px;height:44px;
     display:flex;align-items:center;justify-content:center;
   }
-  table.conj button.mini-speak svg{width:17px;height:17px;}
+  table.conj button.mini-speak svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;}
   .nota{font-size:12px;color:#a89a7d;margin-top:8px;font-style:italic;}
 
   /* ---- grammar & patterns ---- */
@@ -275,34 +285,34 @@
     font-family:'Fraunces',serif;
     font-style:italic;
     font-weight:600;
-    font-size:19px;
+    font-size:20px;
     color:var(--teal-dark);
   }
   .g-card .g-zh-title{
-    font-size:12.5px;
+    font-size:13.5px;
     font-weight:700;
-    color:var(--papaya);
+    color:var(--papaya-dark);
     white-space:nowrap;
   }
-  .g-card .g-explain{font-size:14px;line-height:1.6;margin-bottom:4px;}
-  .g-card .g-explain.en{color:#5c5344;font-style:italic;font-size:13px;}
+  .g-card .g-explain{font-size:16px;line-height:1.6;margin-bottom:5px;}
+  .g-card .g-explain.en{color:#5c5344;font-style:italic;font-size:14.5px;}
   .g-card .g-ex{
     border-top:1px dashed var(--line);
     margin-top:10px;
     padding-top:10px;
   }
-  .g-card .g-ex .es{font-weight:600;font-size:14px;}
-  .g-card .g-ex .zh-en{font-size:12.5px;color:#5c5344;}
+  .g-card .g-ex .es{font-weight:600;font-size:16px;}
+  .g-card .g-ex .zh-en{font-size:14px;color:#5c5344;line-height:1.5;}
 
   .p-card .p-es{
     font-family:'Fraunces',serif;
     font-weight:600;
-    font-size:18px;
+    font-size:19px;
     color:var(--ink);
     margin-bottom:2px;
   }
-  .p-card .p-zh{font-size:14px;color:var(--teal);font-weight:600;margin-bottom:8px;}
-  .p-card .p-note{font-size:12.5px;color:#a89a7d;font-style:italic;margin-bottom:12px;}
+  .p-card .p-zh{font-size:15.5px;color:var(--teal);font-weight:600;margin-bottom:8px;}
+  .p-card .p-note{font-size:14px;color:#8a8071;font-style:italic;margin-bottom:12px;}
   .p-card .p-ex{
     background:var(--cream);
     border:1px solid var(--line);
@@ -315,9 +325,15 @@
     gap:10px;
   }
   .p-card .p-ex:last-child{margin-bottom:0;}
-  .p-card .p-ex .txt .es{font-weight:600;font-size:14px;}
-  .p-card .p-ex .txt .zh-en{font-size:12.5px;color:#5c5344;}
-  .p-card button.mini-speak{flex:0 0 auto;}
+  .p-card .p-ex .txt .es{font-weight:600;font-size:16px;}
+  .p-card .p-ex .txt .zh-en{font-size:14px;color:#5c5344;line-height:1.5;}
+  .p-card button.mini-speak{
+    flex:0 0 44px;
+    width:44px;height:44px;
+    background:none;border:none;cursor:pointer;color:var(--teal-dark);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .p-card button.mini-speak svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;}
 
   footer{
     text-align:center;
@@ -365,7 +381,7 @@
           <div class="spanish" id="sp-word"></div>
           <div class="ipa" id="sp-ipa"></div>
           <button class="speak-btn" id="speakFront" type="button">
-            <svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3a4.5 4.5 0 0 0-2.5-4.03v8.06A4.5 4.5 0 0 0 16.5 12z"/></svg>
+            <svg viewBox="0 0 24 24"><path d="M4 9v6h4l5 5V4L8 9H4z" stroke-linejoin="round"/><path d="M16 8.5a5 5 0 0 1 0 7"/><path d="M18.5 6a8.2 8.2 0 0 1 0 12"/></svg>
             發音
           </button>
         </div>
@@ -597,7 +613,7 @@ function buildRows(forms, v, tense){
       <td class="pron">${p}</td>
       <td class="form">${forms[i]}<div class="trans">${zh} · ${en}</div></td>
       <td class="play"><button class="mini-speak" data-word="${forms[i]}">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3a4.5 4.5 0 0 0-2.5-4.03v8.06A4.5 4.5 0 0 0 16.5 12z"/></svg>
+        <svg viewBox="0 0 24 24"><path d="M4 9v6h4l5 5V4L8 9H4z"/><path d="M16 8.5a5 5 0 0 1 0 7"/><path d="M18.5 6a8.2 8.2 0 0 1 0 12"/></svg>
       </button></td>
     </tr>`;
   }).join('');
@@ -634,7 +650,7 @@ function renderPatterns(){
             <div class="zh-en">${ex.en}</div>
           </div>
           <button class="mini-speak" data-word="${ex.es}">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3a4.5 4.5 0 0 0-2.5-4.03v8.06A4.5 4.5 0 0 0 16.5 12z"/></svg>
+            <svg viewBox="0 0 24 24"><path d="M4 9v6h4l5 5V4L8 9H4z"/><path d="M16 8.5a5 5 0 0 1 0 7"/><path d="M18.5 6a8.2 8.2 0 0 1 0 12"/></svg>
           </button>
         </div>`).join('')}
     </div>`).join('');
