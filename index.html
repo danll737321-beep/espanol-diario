@@ -187,19 +187,30 @@
   </header>
 
   <div class="beginner-banner">
-    <b>建議學習順序：</b>①詞彙(先熟悉高頻單字)→②動詞變位(現在式/過去式)→③文法→④句型。
+    <b>建議學習順序：</b>①發音規則(先熟悉字母怎麼唸)→②詞彙(高頻單字)→③動詞變位(現在式/過去式)→④文法→⑤句型。
     每張卡片都可以點喇叭聽拉美西語（es-MX）發音。
   </div>
 
   <nav class="tabs">
-    <button data-tab="vocab" class="active">詞彙</button>
+    <button data-tab="pron" class="active">發音規則</button>
+    <button data-tab="vocab">詞彙</button>
     <button data-tab="verbs">動詞變位</button>
     <button data-tab="grammar">文法</button>
     <button data-tab="patterns">句型</button>
   </nav>
 
+  <!-- PRONUNCIATION -->
+  <section id="tab-pron" class="active">
+    <div class="toolbar">
+      <input type="text" id="pron-search" placeholder="搜尋字母 / 規則...">
+      <select id="pron-category"><option value="all">全部類別</option></select>
+      <span class="count-badge" id="pron-count"></span>
+    </div>
+    <div id="pron-list"></div>
+  </section>
+
   <!-- VOCAB -->
-  <section id="tab-vocab" class="active">
+  <section id="tab-vocab">
     <div class="toolbar">
       <input type="text" id="vocab-search" placeholder="搜尋詞彙 / 中文 / 例句...">
       <select id="vocab-category"><option value="all">全部分類</option></select>
@@ -246,20 +257,24 @@
 /* =========================================================
    資料載入
    ========================================================= */
-let VOCAB = [], VERBS = [], GRAMMAR = [], PATTERNS = [];
+let VOCAB = [], VERBS = [], GRAMMAR = [], PATTERNS = [], PRON = [];
 
 Promise.all([
   fetch('vocab.json').then(r=>r.json()),
   fetch('verbs.json').then(r=>r.json()),
   fetch('grammar.json').then(r=>r.json()),
-  fetch('patterns.json').then(r=>r.json())
-]).then(([v, vb, gr, pt])=>{
+  fetch('patterns.json').then(r=>r.json()),
+  fetch('pronunciation.json').then(r=>r.json())
+]).then(([v, vb, gr, pt, pr])=>{
   VOCAB = v.map((d,i)=>({...d, id:'vocab-'+i}));
   VERBS = vb.map((d,i)=>({...d, id:'verb-'+d.infinitivo}));
   GRAMMAR = gr.map((d,i)=>({...d, id:'grammar-'+i}));
   PATTERNS = pt.map((d,i)=>({...d, id:'pattern-'+i}));
+  PRON = pr.map((d,i)=>({...d, id:'pron-'+i}));
 
   initVocabCategories();
+  initPronCategories();
+  renderPron();
   renderVocab();
   renderVerbs();
   renderGrammar();
@@ -330,6 +345,43 @@ document.querySelectorAll('nav.tabs button').forEach(btn=>{
     document.getElementById('tab-'+btn.dataset.tab).classList.add('active');
   });
 });
+
+/* =========================================================
+   發音規則
+   ========================================================= */
+function initPronCategories(){
+  const cats = [...new Set(PRON.map(p=>p.category))];
+  const sel = document.getElementById('pron-category');
+  cats.forEach(c=>{
+    const opt = document.createElement('option');
+    opt.value = c; opt.textContent = c;
+    sel.appendChild(opt);
+  });
+}
+function renderPron(){
+  const q = document.getElementById('pron-search').value.trim().toLowerCase();
+  const cat = document.getElementById('pron-category').value;
+  const list = PRON.filter(p=>{
+    if(cat!=='all' && p.category!==cat) return false;
+    if(!q) return true;
+    return (p.combo+p.note_zh+p.note_en+p.example_es).toLowerCase().includes(q);
+  });
+  document.getElementById('pron-count').textContent = list.length + ' / ' + PRON.length + ' 條規則';
+  document.getElementById('pron-list').innerHTML = list.length ? list.map(p=>`
+    <div class="item-card">
+      <div class="item-top">
+        <div class="item-main">
+          <div class="es-main">${p.combo}${p.ipa && p.ipa!=='—' ? `<span class="ipa">/${p.ipa}/</span>` : ''}</div>
+          <div class="meaning">${p.note_zh}</div>
+          <div class="pattern-note" style="margin-top:2px;">${p.note_en}</div>
+        </div>
+        <div class="level-tag">${p.category}</div>
+      </div>
+      <div class="example"><span class="ex-es">${p.example_es}</span>${sndBtn(p.example_es)}<br>${p.example_zh} ／ ${p.example_en}</div>
+    </div>`).join('') : `<div class="empty-note">沒有符合條件的規則</div>`;
+}
+document.getElementById('pron-search').addEventListener('input', renderPron);
+document.getElementById('pron-category').addEventListener('change', renderPron);
 
 /* =========================================================
    詞彙
